@@ -125,11 +125,15 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        attributes = command.copy()
-        del attributes[0]
-        for att in attributes:
-            pair_1, pair_2 = att.split('=')
-            obj_dict[pair_1] = pair_2.replace("\"", "").replace("_", " ")
+        if len(command) == 1:
+            new_instance = HBNBCommand.classes[command[0]](**obj_dict)
+            storage.save
+        else:
+            attributes = command.copy()
+            del attributes[0]
+            for att in attributes:
+                pair_1, pair_2 = att.split('=')
+                obj_dict[pair_1] = pair_2.replace("\"", "").replace("_", " ")
 
         new_instance = HBNBCommand.classes[command[0]](**obj_dict)
         storage.save()
