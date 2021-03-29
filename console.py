@@ -127,7 +127,9 @@ class HBNBCommand(cmd.Cmd):
 
         if len(command) == 1:
             new_instance = HBNBCommand.classes[command[0]](**obj_dict)
-            storage.save
+            storage.save()
+            print(new_instance.id)
+            return
         else:
             attributes = command.copy()
             del attributes[0]
@@ -135,10 +137,10 @@ class HBNBCommand(cmd.Cmd):
                 pair_1, pair_2 = att.split('=')
                 obj_dict[pair_1] = pair_2.replace("\"", "").replace("_", " ")
 
-        new_instance = HBNBCommand.classes[command[0]](**obj_dict)
-        storage.save()
-        print(new_instance.id)
-        storage.save()
+            new_instance = HBNBCommand.classes[command[0]](**obj_dict)
+            storage.save()
+            print(new_instance.id)
+            storage.save()
 
     def help_create(self):
         """ Help information for the create method """
