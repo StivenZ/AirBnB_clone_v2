@@ -145,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
                 print(new_instance.id)
                 storage.save()
-            except:
+            except(AttributeError):
                 pass
 
     def help_create(self):
