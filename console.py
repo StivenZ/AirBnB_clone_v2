@@ -126,21 +126,27 @@ class HBNBCommand(cmd.Cmd):
             return
 
         if len(command) == 1:
-            new_instance = HBNBCommand.classes[command[0]](**obj_dict)
-            storage.save()
-            print(new_instance.id)
-            return
+            if command[0] in HBNBCommand.classes:
+                new_instance = HBNBCommand.classes[command[0]]()
+                storage.save()
+                print(new_instance.id)
+                return
+            else:
+                print("** class doesn't exist **")
+                return
         else:
             attributes = command.copy()
             del attributes[0]
-            for att in attributes:
-                pair_1, pair_2 = att.split('=')
-                obj_dict[pair_1] = pair_2.replace("\"", "").replace("_", " ")
-
-            new_instance = HBNBCommand.classes[command[0]](**obj_dict)
-            storage.save()
-            print(new_instance.id)
-            storage.save()
+            try:
+                for att in attributes:
+                    p1, p2 = att.split('=')
+                    obj_dict[p1] = p2.replace("\"", "").replace("_", " ")
+                new_instance = HBNBCommand.classes[command[0]](**obj_dict)
+                storage.save()
+                print(new_instance.id)
+                storage.save()
+            except:
+                pass
 
     def help_create(self):
         """ Help information for the create method """
