@@ -45,23 +45,22 @@ class DBStorage():
         self.__session = Ses()
 
     def all(self, cls=None):
-            """ All returns a dic with class instances
-            """
-            dic = {}
-            if cls:
-                if isinstance(cls, str):
-                    for ins in self.__session.query(eval(cls)).all():
-                        dic[ins.__class__.__name__ + '.' + ins.id] = ins
-                else:
-                    for ins in self.__session.query(cls).all():
-                        dic[ins.__class__.__name__ + '.' + ins.id] = ins
-
+        """ All returns a dic with class instances
+        """
+        dic = {}
+        if cls:
+            if isinstance(cls, str):
+                for ins in self.__session.query(eval(cls)).all():
+                    dic[ins.__class__.__name__ + '.' + ins.id] = ins
             else:
-                holder_list = [State, City]
-                for clas in holder_list:
-                    for ins in self.__session.query(clas).all():
-                        dic[ins.__class__.__name__ + '.' + ins.id] = ins
-            return dic
+                for ins in self.__session.query(cls).all():
+                    dic[ins.__class__.__name__ + '.' + ins.id] = ins
+        else:
+            holder_list = [State, City]
+            for clas in holder_list:
+                for ins in self.__session.query(clas).all():
+                    dic[ins.__class__.__name__ + '.' + ins.id] = ins
+        return dic
 
     def delete(self, obj=None):
         """Deletes provided object from database"""
