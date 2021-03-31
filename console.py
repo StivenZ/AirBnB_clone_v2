@@ -128,6 +128,7 @@ class HBNBCommand(cmd.Cmd):
         if len(command) == 1:
             if command[0] in HBNBCommand.classes:
                 new_instance = HBNBCommand.classes[command[0]]()
+                storage.new(new_instance)
                 storage.save()
                 print(new_instance.id)
                 return
@@ -142,7 +143,7 @@ class HBNBCommand(cmd.Cmd):
                     p1, p2 = att.split('=')
                     obj_dict[p1] = p2.replace("\"", "").replace("_", " ")
                 new_instance = HBNBCommand.classes[command[0]](**obj_dict)
-                storage.save()
+                storage.new(new_instance)
                 print(new_instance.id)
                 storage.save()
             except(AttributeError):
@@ -228,13 +229,12 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
-
         print(print_list)
 
     def help_all(self):
