@@ -13,6 +13,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 
 metadata = MetaData()
 
+
 class DBStorage():
     """Database management
     """
@@ -21,16 +22,20 @@ class DBStorage():
     PWD = getenv('HBNB_MYSQL_PWD')
     DB = getenv('HBNB_MYSQL_DB')
     env = getenv('HBNB_ENV')
-    classes = ['BaseModel', 'User', 'Place', 'State', 'City', 'Amenity', 'Review']
+    classes = ['BaseModel', 'User', 'Place', 'State',
+               'City', 'Amenity', 'Review']
 
     __engine = None
     __session = None
 
     def __init__(self):
         """Starts the engine and database"""
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:5432/{}'.format(self.USER, self.PWD, self.HOST, self.DB), pool_pre_ping=True)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:5432/{}'.
+                                      format(self.USER, self.PWD,
+                                             self.HOST, self.DB),
+                                      pool_pre_ping=True)
         if self.env == 'test':
-            self.__session.drop_all() #Still dont know how this works
+            self.__session.drop_all()
 
     def reload(self):
         """Creates tables and scoped session"""
