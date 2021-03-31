@@ -54,7 +54,6 @@ class DBStorage():
             else:
                 holder_list = [State, City]
                 for clas in holder_list:
-                    print("Classes that are passing are these: ", clas)
                     for ins in self.__session.query(clas).all():
                         dic[ins.__class__.__name__ + '.' + ins.id] = ins
             return dic
