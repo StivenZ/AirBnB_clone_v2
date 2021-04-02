@@ -8,7 +8,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Float
 class Place(BaseModel):
     """ A place to stay """
     __tablename__ = 'places'
-    if os.environ.get('HBNB_STORAGE') == 'db':
+    if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)

@@ -9,7 +9,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 class User(BaseModel, Base):
     """This class defines a user by various attributes"""
     __tablename__ = 'users'
-    if os.environ.get('HBNB_STORAGE') == 'db':
+    if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
         email = Column(String(128), nullable=False)
         password = Column(String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
