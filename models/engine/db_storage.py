@@ -56,7 +56,7 @@ class DBStorage():
                 for ins in self.__session.query(cls).all():
                     dic[ins.__class__.__name__ + '.' + ins.id] = ins
         else:
-            holder_list = [State, City, User]
+            holder_list = [State, City, User, Place, City, Review, Amenity]
             for clas in holder_list:
                 for ins in self.__session.query(clas).all():
                     dic[ins.__class__.__name__ + '.' + ins.id] = ins

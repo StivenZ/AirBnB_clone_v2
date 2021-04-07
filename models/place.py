@@ -3,9 +3,14 @@
 import os
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from models.amenity import Amenity
+from models.review import Review
+from sqlalchemy import Column, Integer, String,
+ForeignKey, Float, Table, MetaData
+metadata = Base.metadata
 
-class Place(BaseModel):
+
+class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = 'places'
     if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
@@ -19,7 +24,47 @@ class Place(BaseModel):
         price_by_night = Column(Integer, default=0, nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
+        reviews = relationship("Review", cascade="delete",
+                               backref="place")
+        place_amenity = Table('place_amenity', metadata,
+                              Column('place_id', String(60),
+                                     ForeignKey('places.id'),
+                                     primary_key=True,
+                                     nullable=False),
+                              Column('amenity_id', String(60),
+                                     ForeignKey('amenities.id'),
+                                     primary_key=True,
+                                     nullable=False))
+        amenities = relationship('Amenity', secondary='place_amenity',
+                                 viewonly=False)
     else:
+        @property
+        def reviews(self):
+            """retrieves all reviews given place"""
+            from models import storage
+            reviews_dict = storage.all(Review)
+            reviews_list = []
+            for values in reviews_dict.values():
+                if values.place_id == self.id:
+                    reviews_list.append(values)
+            return reviews_list
+
+        @property
+        def amenities(self):
+            "getter for amenities"
+            from models import storage
+            amenity_dict = storage.all(Amenity)
+            amenity_list = []
+            for values in amenity_dict.values():
+                if values.id in amenity_ids:
+                    amenity_list.append(values)
+
+        @amenities.setter
+        def amenities(self, obj):
+            if obj.__name__ == 'Amenity':
+                amenity_ids.append(obj.id)
+            else:
+                return
         city_id = ""
         user_id = ""
         name = ""
