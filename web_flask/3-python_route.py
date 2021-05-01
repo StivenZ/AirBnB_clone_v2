@@ -28,6 +28,7 @@ def replace_var(text):
     return ('C %s' % new_text)
 
 
+@app.route('/python/')
 @app.route('/python/<text>')
 def replace_var_default(text="is cool"):
     """Replaces an input variable"""
