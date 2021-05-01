@@ -28,12 +28,12 @@ def replace_var(text):
     return ('C %s' % new_text)
 
 
-@app.route('/python/(<text>)')
-def replace_var_default(text='is cool'):
+@app.route('/python/<text>')
+def replace_var_default(text="is cool"):
     """Replaces an input variable"""
     new_text = text.replace('_', ' ')
     app.url_map.strict_slashes = False
-    return ('Python %s' % new_text)
+    return ('Python {}'.format(new_text))
 
 
 if __name__ == '__main__':
