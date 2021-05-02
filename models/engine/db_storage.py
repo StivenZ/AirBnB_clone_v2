@@ -80,3 +80,7 @@ class DBStorage():
     def save(self):
         """Commit all changes of the current database"""
         self.__session.commit()
+
+    def close(self):
+        """Closes private session"""
+        self.__session.close()
