@@ -5,8 +5,9 @@ from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 from models.amenity import Amenity
 from models.review import Review
-from sqlalchemy import Column, Integer, String,
-ForeignKey, Float, Table, MetaData
+from sqlalchemy import Column, Integer, String
+from sqlalchemy import ForeignKey, Float, Table
+from sqlalchemy import MetaData
 metadata = Base.metadata
 
 
@@ -17,15 +18,15 @@ class Place(BaseModel, Base):
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
-        description = Column(String(1024), nullable=False)
+        description = Column(String(1024))
         number_rooms = Column(Integer, default=0, nullable=False)
         number_bathrooms = Column(Integer, default=0, nullable=False)
         max_guest = Column(Integer, default=0, nullable=False)
         price_by_night = Column(Integer, default=0, nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        reviews = relationship("Review", cascade="delete",
-                               backref="place")
+        # reviews = relationship("Review", cascade="delete",
+        #                        backref="place")
         place_amenity = Table('place_amenity', metadata,
                               Column('place_id', String(60),
                                      ForeignKey('places.id'),
