@@ -11,8 +11,6 @@ from os import getenv
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-metadata = MetaData()
-
 
 class DBStorage():
     """Database management
